@@ -1,2 +1,4 @@
 flask>=2.0.0
 gunicorn>=20.1.0
+# Temporary Fix related to this MR: https://github.com/pypa/packaging/pull/851
+packaging @ git+https://github.com/DEKHTIARJonathan/packaging@821af057d379341261d158f798904a2e289d06f1
