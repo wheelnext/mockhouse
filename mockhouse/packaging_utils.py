@@ -10,7 +10,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-
+import contextlib
+import typing
 import zipfile
 from pathlib import Path
 
@@ -87,7 +88,7 @@ def parse_metadata_file_content(content: bytes | None) -> pmeta.Metadata:
     raise NoMetadataError
 
 
-def wheel_to_metadata_dict(wheelpath: Path) -> dict:
+def wheel_to_metadata_dict(wheelpath: Path) -> dict[str, typing.Any]:
     with zipfile.ZipFile(wheelpath, 'r') as whl:
         # Locate the METADATA file within the wheel package
         metadata_file = next(
@@ -98,7 +99,11 @@ def wheel_to_metadata_dict(wheelpath: Path) -> dict:
             with whl.open(metadata_file) as f:
                 metadata_content = f.read()
                 # Parse the content to a dictionary
-                return parse_metadata_file_content(metadata_content)._raw
+                metadata_dict = parse_metadata_file_content(metadata_content).__dict__
+                with contextlib.suppress(KeyError):
+                    del metadata_dict["_raw"]
+                return metadata_dict
+
         else:
             raise FileNotFoundError("No METADATA file found in this wheel package.")
 
