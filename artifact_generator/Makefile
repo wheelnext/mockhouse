@@ -38,4 +38,4 @@ generate_variants:  ## Create Multiple `Variants` of the package above
 	 python generate_many_variants.py
 
 build_all: build generate_variants  # Chain both actions together
-	cp dist/*.whl ../artifacts/
+	cp dist/*.whl ../static/artifacts/

@@ -20,7 +20,10 @@ import packaging.metadata as pmeta  # noqa: E402
 # ========================= MONKEY PATCHING PACKING ========================= #
 """Packaging needs to be monkey path in order to add `variant` support"""
 
+pmeta._STRING_FIELDS.add("variant_hash")
 pmeta._LIST_FIELDS.add("variants")
+pmeta._EMAIL_TO_RAW_MAPPING["variant-hash"] = "variant_hash"
+pmeta._RAW_TO_EMAIL_MAPPING["variant_hash"] = "variant-hash"
 pmeta._EMAIL_TO_RAW_MAPPING["variant"] = "variants"
 pmeta._RAW_TO_EMAIL_MAPPING["variants"] = "variant"
 
@@ -44,19 +47,21 @@ class MetadataRebuildMeta(type):
 # Define the Metadata class with the metaclass
 class RawMetadata(pmeta.RawMetadata):
     """Variants-Augmented RawMetadata Representation."""
-    
+
     # Define additional attributes
+    variant_hash: str
     variants: list[str]  # type: ignore
 
 
 # Define the Metadata class with the metaclass
 class Metadata(pmeta.Metadata, metaclass=MetadataRebuildMeta):
     """Variants-Augmented Metadata Representation."""
-    
+
     # Define additional attributes
     # NOTE: For some reason the `METADATA` version shipped in 3.13 is 2.1,
     # which means you can not specify a version any higher. Otherwise you get this:
     # packaging.metadata.InvalidMetadata: variant introduced in metadata version 2.2, not 2.1
+    variant_hash: pmeta._Validator[str | None] = pmeta._Validator(added="2.1")
     variants: pmeta._Validator[list[str] | None] = pmeta._Validator(added="2.1")
     """:external:ref:`core-metadata-variants`"""
 
@@ -76,7 +81,7 @@ def parse_metadata_file_content(content: bytes | None) -> pmeta.Metadata:
     # from extracting a METADATA or PKG-INFO file from an artifact.
     if content is not None:
         return pmeta.Metadata.from_email(content, validate=True)
-    
+
     # If we don't have contents or form data, then we don't have any metadata
     # and the only thing we can do is error.
     raise NoMetadataError
@@ -101,16 +106,9 @@ def wheel_to_metadata_dict(wheelpath: Path) -> dict:
 if __name__ == "__main__":
 
     import pprint
-
-    for wheel_file in [
-        "dummy_project-0.0.1.dev1-py3-none-any.whl",
-        "dummy_project-0.0.1.dev1-1-py3-none-any.whl",
-        "dummy_project-0.0.1.dev1-2-py3-none-any.whl",
-        "dummy_project-0.0.1.dev1-3-py3-none-any.whl",
-        "dummy_project-0.0.1.dev1-4-py3-none-any.whl",
-        "dummy_project-0.0.1.dev1-5-py3-none-any.whl",
-    ]:
-        metadata_dict = wheel_to_metadata_dict(wheelpath=Path("artifact_generator/dist") / wheel_file)
+    wheel_path = Path(__file__).parent.parent / "static/artifacts"
+    for wheel_file in wheel_path.glob('*.whl'):
+        metadata_dict = wheel_to_metadata_dict(wheel_path / wheel_file)
 
         print("\n---------------------------------\n")
         pprint.pprint(metadata_dict)
