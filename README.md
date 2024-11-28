@@ -23,3 +23,21 @@ The goal is that the client follows:
   described by uv. This means that the installer will exhaust one variant "index"
   before proceeding to the next variant. Other indexes will only be reached if
   none of variants match.
+
+
+# Commands
+
+## Start of the development flask server
+
+```bash
+make install
+mockhouse_flask --host=0.0.0.0 --port=5000 --debug
+```
+
+## Generation of the artifact wheels
+
+```bash
+make install
+mockhouse --version
+mockhouse generate_artifacts
+```

@@ -4,7 +4,7 @@
 {
     "name": "MockHouse Application Dev Container",
     "image": "python:latest",
-    "workspaceFolder": "/workspaces/mockhouse",
+    "workspaceFolder": "/workspace/mockhouse",
     "workspaceMount": "source=${localWorkspaceFolder},target=/workspaces/mockhouse,type=bind",
     "customizations": {
       "vscode": {
@@ -37,8 +37,8 @@
       }
     },
   
-    "postCreateCommand": "pip install -r requirements.txt",
-    "postStartCommand": "python -m flask --app main run --host=0.0.0.0 --port=5000 --debug",
+    "postCreateCommand": "cd /workspace/mockhouse && make install",
+    "postStartCommand": "mockhouse_flask --host=0.0.0.0 --port=5000 --debug",
 
     "forwardPorts": [5000],
   

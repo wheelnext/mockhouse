@@ -1,16 +1,19 @@
 import os
 import re
+import shlex
 import shutil
+import subprocess
+import sys
 import tempfile
+from contextlib import contextmanager
 from pathlib import Path
 
-
-from wheel.cli.unpack import unpack as wheel_unpack
-import wheel.cli.pack as whl_pck
-
 import dict_hash
+import wheel.cli.pack as whl_pck
+from wheel.cli.unpack import unpack as wheel_unpack
 
-VARIANT_HASH_LEN = 8
+from mockhouse import VARIANT_HASH_LEN
+from mockhouse.main import app as flask_app
 
 VARIANTS_2_GENERATE = [
     # ************************ DEVELOPER NOTE ************************ #
@@ -69,7 +72,7 @@ VARIANTS_2_GENERATE = [
 ]
 
 
-def wheel_pack(directory: str, dest_dir: str, build_number: str | None = None, variant_hash: str | None = None) -> None:
+def wheel_pack(directory: str, dest_dir: str, build_number: str | None = None, variant_hash: str | None = None) -> None:  # noqa: E501
     """Repack a previously unpacked wheel directory into a new wheel file.
 
     The .dist-info/WHEEL file must contain one or more tags so that the target
@@ -82,11 +85,11 @@ def wheel_pack(directory: str, dest_dir: str, build_number: str | None = None, v
     dist_info_dirs = [
         fn
         for fn in os.listdir(directory)
-        if os.path.isdir(os.path.join(directory, fn)) and whl_pck.DIST_INFO_RE.match(fn)
+        if os.path.isdir(os.path.join(directory, fn)) and whl_pck.DIST_INFO_RE.match(fn)  # noqa: PTH112, PTH118
     ]
     if len(dist_info_dirs) > 1:
         raise whl_pck.WheelError(f"Multiple .dist-info directories found in {directory}")
-    elif not dist_info_dirs:
+    if not dist_info_dirs:
         raise whl_pck.WheelError(f"No .dist-info directories found in {directory}")
 
     # Determine the target wheel filename
@@ -94,8 +97,8 @@ def wheel_pack(directory: str, dest_dir: str, build_number: str | None = None, v
     name_version = whl_pck.DIST_INFO_RE.match(dist_info_dir).group("namever")
 
     # Read the tags and the existing build number from .dist-info/WHEEL
-    wheel_file_path = os.path.join(directory, dist_info_dir, "WHEEL")
-    with open(wheel_file_path, "rb") as f:
+    wheel_file_path = os.path.join(directory, dist_info_dir, "WHEEL")  # noqa: PTH118
+    with open(wheel_file_path, "rb") as f:  # noqa: PTH123
         info = whl_pck.BytesParser(policy=whl_pck.email.policy.compat32).parse(f)
         tags: list[str] = info.get_all("Tag", [])
         existing_build_number = info.get("Build")
@@ -115,7 +118,7 @@ def wheel_pack(directory: str, dest_dir: str, build_number: str | None = None, v
             name_version += "-" + build_number
 
         if build_number != existing_build_number:
-            with open(wheel_file_path, "wb") as f:
+            with open(wheel_file_path, "wb") as f:  # noqa: PTH123
                 whl_pck.BytesGenerator(f, maxheaderlen=0).flatten(info)
 
     if variant_hash is not None:
@@ -129,28 +132,40 @@ def wheel_pack(directory: str, dest_dir: str, build_number: str | None = None, v
     tagline = whl_pck.compute_tagline(tags)
 
     # Repack the wheel
-    wheel_path = os.path.join(dest_dir, f"{name_version}-{tagline}.whl")
+    wheel_path = os.path.join(dest_dir, f"{name_version}-{tagline}.whl")  # noqa: PTH118
     with whl_pck.WheelFile(wheel_path, "w") as wf:
-        print(f"Repacking wheel as {wheel_path}...", flush=True)
+        print(f"Repacking wheel as {wheel_path}...", flush=True)  # noqa: T201
         wf.write_files(directory)
 
     return wheel_path
 
 
-if __name__ == "__main__":
+def get_generated_whl_file(folder: str | Path) -> Path:
+    # Find all .whl files in the folder
+    whl_files = list(Path(folder).glob("*.whl"))
 
-    ___base_whl__ = Path("dist/dummy_project-0.0.1-py3-none-any.whl")
+    if len(whl_files) == 0:
+        raise FileNotFoundError("No .whl files found in the folder.")
+    if len(whl_files) > 1:
+        raise RuntimeError(f"Multiple .whl files found: {whl_files}")
 
-    if not ___base_whl__.exists():
-        raise FileNotFoundError(___base_whl__)
+    return Path(whl_files[0])
 
-    for variant_id, variant_nfo in enumerate(VARIANTS_2_GENERATE):
+
+def generate_variants(source_folder: str | Path, dest_folder: str | Path):
+
+    base_whl_f = get_generated_whl_file(Path(source_folder) / "dist")
+
+    if not base_whl_f.exists():
+        raise FileNotFoundError(base_whl_f)
+
+    for variant_nfo in VARIANTS_2_GENERATE:
         with tempfile.TemporaryDirectory() as tmpdir:
 
-            tmpdir = Path(tmpdir)
-            source_whl = tmpdir / ___base_whl__.name
+            tmpdir = Path(tmpdir)  # noqa: PLW2901
+            source_whl = tmpdir / base_whl_f.name
 
-            shutil.copy(___base_whl__, source_whl)
+            shutil.copy(base_whl_f, source_whl)
 
             if not source_whl.exists():
                 raise FileNotFoundError(source_whl)
@@ -173,12 +188,12 @@ if __name__ == "__main__":
             if not metadata_f.exists():
                 raise FileNotFoundError(metadata_f)
 
-            # keep only the first part of the hash. Like git hash, uniqueness is all that matters,
-            # and 8 characters is plenty when considering that a given package will have relative
-            # few variants.
+            # keep only the first part of the hash. Like git hash, uniqueness is all
+            # that matters, and 8 characters is plenty when considering that a given
+            # package will have relative few variants.
             variant_hash = dict_hash.shake_128(variant_nfo)
 
-            with metadata_f.open(mode='r+') as file:
+            with metadata_f.open(mode="r+") as file:
                 # Read all lines
                 lines = file.readlines()
 
@@ -201,11 +216,67 @@ if __name__ == "__main__":
                         # Variant: fictional_hw :: <key> :: <val>
                         file.write(f"Variant: {variant_provider} :: {key} :: {val}\n")
 
-            final_whl = wheel_pack(directory=wheel_dir, dest_dir=tmpdir, variant_hash=variant_hash)
+            dest_whl_path = wheel_pack(
+                directory=wheel_dir,
+                dest_dir=tmpdir,
+                variant_hash=variant_hash
+            )
 
-            if not Path(final_whl).exists():
-                raise FileNotFoundError(final_whl)
+            if not Path(dest_whl_path).exists():
+                raise FileNotFoundError(dest_whl_path)
 
-            shutil.copy(final_whl, "dist/")
+            if not isinstance(dest_folder, (str, Path)):
+                raise TypeError(f"Expected: str|Path, received: {type(dest_folder)}")
 
-            print()
+            shutil.copy(dest_whl_path, dest_folder)
+            print(f"Copying wheel to {dest_folder}...\n", flush=True)  # noqa: T201
+
+
+@contextmanager
+def temp_wd(path: str | Path):
+    cwd = Path.cwd()
+    os.chdir(path)
+    yield
+    os.chdir(cwd)
+
+
+def generate_artifacts(*args, **kwargs):
+    base_directory = Path(os.path.realpath(__file__)).parent
+    with temp_wd(base_directory):
+
+        base_dest_folder = Path(flask_app.static_folder) / "packages"
+
+        projects = [
+            "dummy_project",
+            "sandbox_project",
+        ]
+
+        for project_name in projects:
+            source_folder = base_directory / project_name
+            dest_folder = base_dest_folder / project_name
+
+            print("*************************************************")
+            print(f"Processing: `{project_name}`")
+            print(f"{source_folder=}")
+            print(f"{dest_folder=}\n")
+
+            with temp_wd(source_folder):
+                result = subprocess.run(  # noqa: S603
+                    shlex.split("make build"),
+                    capture_output=True,
+                    text=True,
+                    check=False
+                )
+
+            if result.returncode != 0:
+                print(f"{result.stdout=}")  # noqa: T201
+                print(f"{result.stderr=}")  # noqa: T201
+                sys.exit(result.returncode)
+
+            dest_folder.mkdir(exist_ok=True, parents=True)
+            generate_variants(source_folder, dest_folder)
+            print("-------------------------------------------------\n")
+
+
+if __name__ == "__main__":
+    generate_artifacts()

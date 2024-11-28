@@ -33,9 +33,3 @@ build: clean ## builds source and wheel package
 	pip install --upgrade "setuptools>=75.2.0,<76.0.0" "wheel>=0.44,<0.45" "build>1.2.0,<1.3.0"
 	python3 -m build --wheel
 	ls -l dist
-
-generate_variants:  ## Create Multiple `Variants` of the package above
-	python generate_many_variants.py
-
-build_all: build generate_variants  # Chain both actions together
-	cp dist/*.whl ../static/artifacts/packages/dummy_project

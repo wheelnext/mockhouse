@@ -8,9 +8,9 @@ build-backend = "setuptools.build_meta"
 exclude = ["*"]
 
 [project]
-name = "dummy_project"
+name = "sandboxx_project"
 version = "0.0.1"
-description = "A dummy Python project with no code"
+description = "A sandbox Python project with no code"
 readme = ""
 requires-python = ">=3.8"
 authors = [
@@ -51,14 +51,4 @@ classifiers = [
 ]
 
 dependencies = [
-]
-
-
-[project.optional-dependencies]
-dev = [
-    "check-manifest",
-    # Pre Commit Hooks
-    "pre-commit>=3.6.0,<3.7",
-    # Linting
-    "ruff>=0.3,<0.4"
 ]
