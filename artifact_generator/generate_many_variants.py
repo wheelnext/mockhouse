@@ -1,10 +1,16 @@
+import os
+import re
 import shutil
 import tempfile
 from pathlib import Path
 
+
+from wheel.cli.unpack import unpack as wheel_unpack
+import wheel.cli.pack as whl_pck
+
 import dict_hash
 
-hash_keep_length = 8
+VARIANT_HASH_LEN = 8
 
 VARIANTS_2_GENERATE = [
     # ************************ DEVELOPER NOTE ************************ #
@@ -63,15 +69,80 @@ VARIANTS_2_GENERATE = [
 ]
 
 
+def wheel_pack(directory: str, dest_dir: str, build_number: str | None = None, variant_hash: str | None = None) -> None:
+    """Repack a previously unpacked wheel directory into a new wheel file.
+
+    The .dist-info/WHEEL file must contain one or more tags so that the target
+    wheel file name can be determined.
+
+    :param directory: The unpacked wheel directory
+    :param dest_dir: Destination directory (defaults to the current directory)
+    """
+    # Find the .dist-info directory
+    dist_info_dirs = [
+        fn
+        for fn in os.listdir(directory)
+        if os.path.isdir(os.path.join(directory, fn)) and whl_pck.DIST_INFO_RE.match(fn)
+    ]
+    if len(dist_info_dirs) > 1:
+        raise whl_pck.WheelError(f"Multiple .dist-info directories found in {directory}")
+    elif not dist_info_dirs:
+        raise whl_pck.WheelError(f"No .dist-info directories found in {directory}")
+
+    # Determine the target wheel filename
+    dist_info_dir = dist_info_dirs[0]
+    name_version = whl_pck.DIST_INFO_RE.match(dist_info_dir).group("namever")
+
+    # Read the tags and the existing build number from .dist-info/WHEEL
+    wheel_file_path = os.path.join(directory, dist_info_dir, "WHEEL")
+    with open(wheel_file_path, "rb") as f:
+        info = whl_pck.BytesParser(policy=whl_pck.email.policy.compat32).parse(f)
+        tags: list[str] = info.get_all("Tag", [])
+        existing_build_number = info.get("Build")
+
+        if not tags:
+            raise whl_pck.WheelError(
+                f"No tags present in {dist_info_dir}/WHEEL; cannot determine target "
+                f"wheel filename"
+            )
+
+    # Set the wheel file name and add/replace/remove the Build tag in .dist-info/WHEEL
+    build_number = build_number if build_number is not None else existing_build_number
+    if build_number is not None:
+        del info["Build"]
+        if build_number:
+            info["Build"] = build_number
+            name_version += "-" + build_number
+
+        if build_number != existing_build_number:
+            with open(wheel_file_path, "wb") as f:
+                whl_pck.BytesGenerator(f, maxheaderlen=0).flatten(info)
+
+    if variant_hash is not None:
+        variant_hash_pattern = rf"^[a-fA-F0-9]{{{VARIANT_HASH_LEN}}}$"
+        # if the hash is not a valid hash value, drop the value and ignore
+        variant_hash = variant_hash[:VARIANT_HASH_LEN]
+        if re.match(variant_hash_pattern, variant_hash):
+            name_version += f"-#{variant_hash}"
+
+    # Reassemble the tags for the wheel file
+    tagline = whl_pck.compute_tagline(tags)
+
+    # Repack the wheel
+    wheel_path = os.path.join(dest_dir, f"{name_version}-{tagline}.whl")
+    with whl_pck.WheelFile(wheel_path, "w") as wf:
+        print(f"Repacking wheel as {wheel_path}...", flush=True)
+        wf.write_files(directory)
+
+    return wheel_path
+
+
 if __name__ == "__main__":
 
     ___base_whl__ = Path("dist/dummy_project-0.0.1-py3-none-any.whl")
 
     if not ___base_whl__.exists():
         raise FileNotFoundError(___base_whl__)
-
-    from wheel.cli.unpack import unpack as wheel_unpack
-    from wheel.cli.pack import pack as wheel_pack
 
     for variant_id, variant_nfo in enumerate(VARIANTS_2_GENERATE):
         with tempfile.TemporaryDirectory() as tmpdir:
@@ -130,11 +201,9 @@ if __name__ == "__main__":
                         # Variant: fictional_hw :: <key> :: <val>
                         file.write(f"Variant: {variant_provider} :: {key} :: {val}\n")
 
-            wheel_pack(directory=wheel_dir, dest_dir=tmpdir, build_number=f'0+v{variant_hash[:hash_keep_length]}')
+            final_whl = wheel_pack(directory=wheel_dir, dest_dir=tmpdir, variant_hash=variant_hash)
 
-            final_whl = tmpdir / f"{dirname}-0+v{variant_hash[:hash_keep_length]}-py3-none-any.whl"
-
-            if not final_whl.exists():
+            if not Path(final_whl).exists():
                 raise FileNotFoundError(final_whl)
 
             shutil.copy(final_whl, "dist/")

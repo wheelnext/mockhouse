@@ -35,7 +35,7 @@ build: clean ## builds source and wheel package
 	ls -l dist
 
 generate_variants:  ## Create Multiple `Variants` of the package above
-	 python generate_many_variants.py
+	python generate_many_variants.py
 
 build_all: build generate_variants  # Chain both actions together
-	cp dist/*.whl ../static/artifacts/
+	cp dist/*.whl ../static/artifacts/packages/dummy_project
