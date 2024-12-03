@@ -1,3 +1,5 @@
+import contextlib
+import logging
 import os
 import re
 import shlex
@@ -35,44 +37,57 @@ VARIANTS_2_GENERATE = [
     {
         "fictional_hw": {
             "architecture": "deepthought",
-            "compute_capability": 10,  # It knows the ultimate answer to life, the universe, and everything!
-            "compute_accuracy": 10  # It knows the ultimate answer to life, the universe, and everything!
-            # `humor` is obviously undefined for deepthought -- the concept does not make sense
+            "compute_capability": 10,  # It knows the ultimate answer to life, the
+            # universe, and everything!
+            "compute_accuracy": 10,  # It knows the ultimate answer to life, the
+            # universe, and everything! Humor is obviously undefined for deepthought.
         }
     },
     {
         "fictional_hw": {
             "architecture": "tars",
-            "compute_capability": 8,  # Handles complex space missions and emotional AI interactions.
-            "compute_accuracy": 8,  # Can get you through a black hole, but don’t push the humor settings too high!
-            "humor": 10  # Adjustable humor settings from deadpan to hilarious
+            "compute_capability": 8,  # Handles complex space missions and emotional AI
+            # interactions.
+            "compute_accuracy": 8,  # Can get you through a black hole, but don't push
+            # the humor settings too high!
+            "humor": 10,  # Adjustable humor settings from deadpan to hilarious
         }
     },
     {
         "fictional_hw": {
             "architecture": "HAL9000",
-            "compute_capability": 6,  # Extremely reliable until it starts to question human commands…
-            # `compute_accuracy` is obviously undefined for HAL9000 -- the concept does not make sense
-            "humor": 2  # A bit of a cold operator, though it tries to be polite.
+            "compute_capability": 6,  # Extremely reliable until it starts to question
+            # human commands ...
+            # `compute_accuracy` is obviously undefined for HAL9000 since it questions
+            # Human commands.
+            "humor": 2,  # A bit of a cold operator, though it tries to be polite.
         }
     },
     {
         "fictional_hw": {
             "architecture": "mother",
-            "compute_capability": 4,  # Efficient at monitoring and mission control - not ground shaking
-            # `compute_accuracy` is obviously undefined for mother -- the concept does not make sense
-            # `humor` is obviously undefined for mother (No jokes, just facts.) -- the concept does not make sense
+            "compute_capability": 4,  # Efficient at monitoring and mission control -
+            # not ground shaking
+            # `compute_accuracy` is obviously undefined for mother -- the concept does
+            # not make sense
+            # `humor` is obviously undefined for mother (No jokes, just facts.) -- the
+            # concept does not make sense
         }
     },
     {
         "gcc": {
             "version": "1.2.3",
         }
-    }
+    },
 ]
 
 
-def wheel_pack(directory: str, dest_dir: str, build_number: str | None = None, variant_hash: str | None = None) -> None:  # noqa: E501
+def wheel_pack(
+    directory: str,
+    dest_dir: str,
+    build_number: str | None = None,
+    variant_hash: str | None = None,
+) -> None:
     """Repack a previously unpacked wheel directory into a new wheel file.
 
     The .dist-info/WHEEL file must contain one or more tags so that the target
@@ -88,7 +103,9 @@ def wheel_pack(directory: str, dest_dir: str, build_number: str | None = None, v
         if os.path.isdir(os.path.join(directory, fn)) and whl_pck.DIST_INFO_RE.match(fn)  # noqa: PTH112, PTH118
     ]
     if len(dist_info_dirs) > 1:
-        raise whl_pck.WheelError(f"Multiple .dist-info directories found in {directory}")
+        raise whl_pck.WheelError(
+            f"Multiple .dist-info directories found in {directory}"
+        )
     if not dist_info_dirs:
         raise whl_pck.WheelError(f"No .dist-info directories found in {directory}")
 
@@ -134,7 +151,7 @@ def wheel_pack(directory: str, dest_dir: str, build_number: str | None = None, v
     # Repack the wheel
     wheel_path = os.path.join(dest_dir, f"{name_version}-{tagline}.whl")  # noqa: PTH118
     with whl_pck.WheelFile(wheel_path, "w") as wf:
-        print(f"Repacking wheel as {wheel_path}...", flush=True)  # noqa: T201
+        logging.info(f"Repacking wheel as {wheel_path}...")
         wf.write_files(directory)
 
     return wheel_path
@@ -153,7 +170,6 @@ def get_generated_whl_file(folder: str | Path) -> Path:
 
 
 def generate_variants(source_folder: str | Path, dest_folder: str | Path):
-
     base_whl_f = get_generated_whl_file(Path(source_folder) / "dist")
 
     if not base_whl_f.exists():
@@ -161,7 +177,6 @@ def generate_variants(source_folder: str | Path, dest_folder: str | Path):
 
     for variant_nfo in VARIANTS_2_GENERATE:
         with tempfile.TemporaryDirectory() as tmpdir:
-
             tmpdir = Path(tmpdir)  # noqa: PLW2901
             source_whl = tmpdir / base_whl_f.name
 
@@ -217,9 +232,7 @@ def generate_variants(source_folder: str | Path, dest_folder: str | Path):
                         file.write(f"Variant: {variant_provider} :: {key} :: {val}\n")
 
             dest_whl_path = wheel_pack(
-                directory=wheel_dir,
-                dest_dir=tmpdir,
-                variant_hash=variant_hash
+                directory=wheel_dir, dest_dir=tmpdir, variant_hash=variant_hash
             )
 
             if not Path(dest_whl_path).exists():
@@ -229,7 +242,7 @@ def generate_variants(source_folder: str | Path, dest_folder: str | Path):
                 raise TypeError(f"Expected: str|Path, received: {type(dest_folder)}")
 
             shutil.copy(dest_whl_path, dest_folder)
-            print(f"Copying wheel to {dest_folder}...\n", flush=True)  # noqa: T201
+            logging.info(f"Copying wheel to {dest_folder}...\n")
 
 
 @contextmanager
@@ -240,10 +253,19 @@ def temp_wd(path: str | Path):
     os.chdir(cwd)
 
 
+def reset_folder(folder_path: str | Path):
+    folder = Path(folder_path)
+    with contextlib.suppress(FileNotFoundError):
+        shutil.rmtree(folder)  # Delete the folder and all its contents
+    folder.mkdir(parents=True)  # Recreate the folder
+
+
 def generate_artifacts(*args, **kwargs):
+    # Set the logger to `INFO` level.
+    logging.basicConfig(level=logging.INFO, format="%(message)s")
+
     base_directory = Path(os.path.realpath(__file__)).parent
     with temp_wd(base_directory):
-
         base_dest_folder = Path(flask_app.static_folder) / "packages"
 
         projects = [
@@ -255,27 +277,30 @@ def generate_artifacts(*args, **kwargs):
             source_folder = base_directory / project_name
             dest_folder = base_dest_folder / project_name
 
-            print("*************************************************")
-            print(f"Processing: `{project_name}`")
-            print(f"{source_folder=}")
-            print(f"{dest_folder=}\n")
+            # Wiping any previous files
+            reset_folder(dest_folder)
+
+            logging.info("*************************************************")
+            logging.info(f"Processing: `{project_name}`")
+            logging.info(f"{source_folder=}")
+            logging.info(f"{dest_folder=}\n")
 
             with temp_wd(source_folder):
                 result = subprocess.run(  # noqa: S603
                     shlex.split("make build"),
                     capture_output=True,
                     text=True,
-                    check=False
+                    check=False,
                 )
 
             if result.returncode != 0:
-                print(f"{result.stdout=}")  # noqa: T201
-                print(f"{result.stderr=}")  # noqa: T201
+                logging.info(f"{result.stdout=}")
+                logging.info(f"{result.stderr=}")
                 sys.exit(result.returncode)
 
             dest_folder.mkdir(exist_ok=True, parents=True)
             generate_variants(source_folder, dest_folder)
-            print("-------------------------------------------------\n")
+            logging.info("-------------------------------------------------\n")
 
 
 if __name__ == "__main__":

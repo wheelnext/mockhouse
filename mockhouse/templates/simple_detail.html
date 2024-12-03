@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+</head>
+
+<body>
+  <h1>Simple Index - MOCKHOUSE</h1>
+  <h2>Package : `{{name}}`</h2>
+  {% for whl in wheel_files %}
+  <a href="{{ url_for('static', filename=whl.url) }}#sha256={{ whl.sha256 }}">{{ whl.name }}</a><br />
+  {% endfor -%}
+</body>
+
+</html>

@@ -7,7 +7,7 @@ from flask import Flask
 
 __version__ = importlib.metadata.version("mockhouse")
 
-ARTIFACTS_FOLDER = Path(__file__) / "static/artifacts"
+ARTIFACTS_FOLDER = Path(__file__).parent / "static/packages"
 VARIANT_HASH_LEN = 8
 
 from mockhouse.simpleA.routes import simpleA_bp  # noqa: E402

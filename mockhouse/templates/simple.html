@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+</head>
+
+<body>
+  <h1>Simple Index - MOCKHOUSE</h1>
+  {% for package in packages -%}
+  <a href="{{package}}/">{{ package }}</a><br />
+  {% endfor -%}
+</body>
+
+</html>

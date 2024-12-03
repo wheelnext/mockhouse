@@ -1,12 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
-  </head>
-  <body>
-    <h1>Variants for {{ name }}</h1>
-    {% for variant in variants -%}
-    <a href="/simple/{{name}}/variant/{{variant}}">{{ variant }}</a><br />
-    {% endfor -%}
-  </body>
+</head>
+
+<body>
+  <h1>Variants for {{ name }}</h1>
+  {% for variant in variants -%}
+  <a href="../variant/{{variant}}">{{ variant }}</a><br />
+  {% endfor -%}
+</body>
+
 </html>
