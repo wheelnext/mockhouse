@@ -1,16 +1,208 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 
 <head>
-    <title>Simple index</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MockHouse - A fast development platform for the Wheel-Next Open-Source Initiative.</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f5f5;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        header {
+            background: #007acc;
+            color: #fff;
+            width: 100%;
+            padding: 1.5rem;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin: 0;
+        }
+
+        header p {
+            font-size: 1.2rem;
+            margin-top: 0.5rem;
+            font-style: italic;
+        }
+
+        .content {
+            padding: 2rem;
+            max-width: 1200px;
+        }
+
+        .highlight {
+            color: #007acc;
+            font-weight: bold;
+        }
+
+        .cta {
+            background: #007acc;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            padding: 1rem 2rem;
+            font-size: 1.3rem;
+            cursor: pointer;
+            margin-top: 2rem;
+            transition: background 0.3s ease;
+        }
+
+        .cta:hover {
+            background: #005a99;
+        }
+
+        footer {
+            padding: 1rem;
+            font-size: 0.9rem;
+            color: #777;
+            margin-top: auto;
+        }
+
+        .joke {
+            color: #555;
+            font-size: 1.1rem;
+            margin-top: 2rem;
+            font-style: italic;
+        }
+
+        table {
+            border-collapse: collapse;
+            /* Optional: Remove spacing between borders */
+            width: 100%;
+            /* Optional: Adjust table width */
+        }
+
+        table td,
+        table th {
+            padding: 0.5rem 1rem 0.5rem 1rem;
+            text-align: left;
+            /* Optional: Set default text alignment */
+        }
+
+        /* Optional: Add styles for better table aesthetics */
+        table th {
+            border: 1px solid #ddd;
+            background-color: #cac8c8;
+            /* Optional: Light background for headers */
+            font-weight: bold;
+        }
+
+        table td {
+            text-align: center;
+            border: 1px solid #ddd;
+            /* Optional: Add border for clarity */
+        }
+    </style>
 </head>
 
 <body>
-    <h1>Simple index</h1>
 
-    <ul>
-        <li><a href="pep-771-demo-a/index.html">pep-771-demo-a</a></li>
-        <li><a href="pep-771-demo-b/index.html">pep-771-demo-b</a></li>
-    </ul>
+    <header>
+        <h1>MockHouse</h1>
+        <p>A fast development platform for the <a href="https://github.com/wheel-next" target="_blank"
+                style="color: white;">Wheel-Next
+                Open-Source Initiative</a>.</p>
+    </header>
+
+    <div class=" content">
+        <p>
+            Welcome to MockHouse, join us on
+            <a href="https://discuss.python.org/" target="_blank" class="highlight">discuss.python.org</a>,
+            <a href="https://discord.com/channels/803025117553754132/1279204588196597811" target="_blank"
+                class="highlight">
+                discord - #wheel-next
+            </a> and
+            <a href="https://github.com/wheel-next" target="_blank" class="highlight">github</a> !
+        </p>
+
+        <div class="joke">
+            <pre>mockhouse = unittest.mock("https://github.com/pypi/warehouse.git")</pre>
+        </div>
+
+        <img src="static/mockhouse.jpeg" style="margin-top: 1rem; height: 450px;"> <br>
+
+        <div>
+            <h2>~ Work in Progress ~</h2>
+            <table border="1" style="border-collapse: collapse; width: 100%;">
+                <thead>
+                    <tr>
+                        <th>PEP</th>
+                        <th>Title</th>
+                        <th>PEP Link</th>
+                        <th>DPO Link</th>
+                        <th>PIP Index</th>
+                        <th>Demo Link</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>PEP 759</td>
+                        <td>External Wheel Hosting</td>
+                        <td><a href="https://peps.python.org/pep-0759/" target="_blank">PEP</a></td>
+                        <td><a href="https://discuss.python.org/t/pep-759-external-wheel-hosting/66458"
+                                target="_blank">DPO</a></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>PEP 766</td>
+                        <td>Explicit Priority Choices Among Multiple Indexes</td>
+                        <td><a href="https://peps.python.org/pep-0766/" target="_blank">PEP</a></td>
+                        <td><a href="https://discuss.python.org/t/pep-766-handling-multiple-indexes-index-priority/71589"
+                                target="_blank">DPO</a></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>PEP 771</td>
+                        <td>Default Extras for Python Software Packages</td>
+                        <td><a href="https://github.com/python/peps/pull/4198" target="_blank">PEP</a></td>
+                        <td><a href="https://discuss.python.org/t/adding-a-default-extra-require-environment/4898"
+                                target="_blank">DPO</a></td>
+                        <td><a href="./pep-771/">SIMPLE</a></td>
+                        <td><a target="_blank" href="https://github.com/wheel-next/pep_771/">Github</a></td>
+                    </tr>
+                    <tr>
+                        <td>PEP 777</td>
+                        <td>How to Re-invent the Wheel</td>
+                        <td><a href="https://peps.python.org/pep-0777/" target="_blank">PEP</a></td>
+                        <td><a href="https://discuss.python.org/t/pep-777-how-to-re-invent-the-wheel/67484"
+                                target="_blank">DPO</a></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>PEP 778</td>
+                        <td>Supporting Symlinks in Wheels</td>
+                        <td><a href="https://github.com/python/peps/pull/3786" target="_blank">PEP</a></td>
+                        <td><a href="https://discuss.python.org/t/pep-778-supporting-symlinks-in-wheels/53824"
+                                target="_blank">DPO</a></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+
+    <footer>
+        <a href="https://wheel-next.github.io/mockhouse/" class="highlight">
+            © 2025 MockHouse | Serving wheels with a wink and a nudge (when not eating tacos).
+        </a>
+    </footer>
 
 </body>
 
