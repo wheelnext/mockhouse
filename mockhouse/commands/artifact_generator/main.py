@@ -19,12 +19,14 @@ from mockhouse.main import app as flask_app
 
 VARIANTS_2_GENERATE = [
     # ************************ DEVELOPER NOTE ************************ #
-    # The idea here is to provide "different architectures" which sometimes have overlapping key/val
-    # sometimes they don't. Not all architectures necessarily make sense to publish all "key/val".
-    # The point is most likely to inject all kind of weird cases that later `mockhouse` will be able
-    # to serve and PIP + Plugin can do its thing
+    # The idea here is to provide "different architectures" which sometimes have
+    # overlapping key/ sometimes they don't. Not all architectures necessarily make
+    # sense to publish all "key/val". The point is most likely to inject all kind of
+    # weird cases that later `mockhouse` will be able to serve and PIP + Plugin can do
+    # its thing
     #
-    # Note: Humor is absolutely an integral piece of this PEP.
+    # Author's Note: Humor is absolutely an integral piece of this PEP.
+    #
     # ************************ DEVELOPER NOTE ************************ #
     # {
     #     "fictional_hw": {
@@ -74,9 +76,38 @@ VARIANTS_2_GENERATE = [
             # concept does not make sense
         }
     },
+    # {
+    #     "fictional_tech": {
+    #         "technology": "*",
+    #         "risk_min_tolerance": ">0, <=10,000",
+    #         "quantum_capability": in [
+    #           NEWTONIAN, SIMPLE_SUPERPOSITION, QUANTUM_SUPERFLUID , QUANTUM_FOAM
+    #         ],
+    #         "power_requirements_in_solar_output": ">0.0, <1.0"
+    #     }
+    # },
     {
-        "gcc": {
-            "version": "1.2.3",
+        "fictional_tech": {
+            "technology": "Auto Chef and Food Replicator",  # The Fifth Element
+            "risk_min_tolerance": 50,  # Unless it malfunctions, you'll be eating well.
+            "quantum_capability": "SIMPLE_SUPERPOSITION",  # It uses basic quantum
+            # principles to combine ingredients and create meals, but the tech
+            # doesn't push the boundaries of quantum mechanics.
+            "power_requirements_in_solar_output": 0.00001,  # Fairly simple process
+        }
+    },
+    {
+        "fictional_tech": {
+            "technology": " Infinite Improbability Drive",  # Hitchhiker's Guide
+            "risk_min_tolerance": 10000,  # Turning people into sofas or releasing
+            # sentient whales mid-flight is always a possibility.
+            "quantum_capability": "QUANTUM_FOAM",  # The drive taps into the quantum
+            # fluctuations of the universe, creating random, unpredictable effects by
+            # distorting reality. It's beyond comprehension and controlled chaos on a
+            # cosmic scale.
+            "power_requirements_in_solar_output": 0.6,  # The drive requires extreme
+            # energy to distort probabilities and alter the fabric of reality, much
+            # like creating temporary wormholes or impossibly improbable events.
         }
     },
 ]
@@ -184,6 +215,9 @@ def generate_variants(source_folder: str | Path, dest_folder: str | Path):
 
             if not source_whl.exists():
                 raise FileNotFoundError(source_whl)
+
+            # Copy the Source Wheel into the target dir
+            shutil.copy(source_whl, dest_folder)
 
             wheel_unpack(path=source_whl, dest=tmpdir)
 
