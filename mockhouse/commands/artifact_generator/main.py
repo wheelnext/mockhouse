@@ -10,13 +10,12 @@ import tempfile
 from contextlib import contextmanager
 from pathlib import Path
 
-import dict_hash
 import wheel.cli.pack as whl_pck
+from variantlib import VARIANT_HASH_LEN
 from variantlib.meta import VariantDescription
 from variantlib.meta import VariantMeta
 from wheel.cli.unpack import unpack as wheel_unpack
 
-from mockhouse import VARIANT_HASH_LEN
 from mockhouse.main import app as flask_app
 
 VARIANTS_2_GENERATE = [
@@ -153,7 +152,7 @@ def wheel_pack(
         # if the hash is not a valid hash value, drop the value and ignore
         variant_hash = variant_hash[:VARIANT_HASH_LEN]
         if re.match(variant_hash_pattern, variant_hash):
-            name_version += f"-#{variant_hash}"
+            name_version += f"-@{variant_hash}"
 
     # Reassemble the tags for the wheel file
     tagline = whl_pck.compute_tagline(tags)
