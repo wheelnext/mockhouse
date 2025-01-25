@@ -12,6 +12,8 @@ from pathlib import Path
 
 import dict_hash
 import wheel.cli.pack as whl_pck
+from variantlib.meta import VariantDescription
+from variantlib.meta import VariantMeta
 from wheel.cli.unpack import unpack as wheel_unpack
 
 from mockhouse import VARIANT_HASH_LEN
@@ -28,88 +30,65 @@ VARIANTS_2_GENERATE = [
     # Author's Note: Humor is absolutely an integral piece of this PEP.
     #
     # ************************ DEVELOPER NOTE ************************ #
-    # {
-    #     "fictional_hw": {
-    #         "architecture": "*",
-    #         "compute_capability": ">1",
-    #         "compute_accuracy": ">1",
-    #         "humor": ">1"
-    #     }
-    # },
-    {
-        "fictional_hw": {
-            "architecture": "deepthought",
-            "compute_capability": 10,  # It knows the ultimate answer to life, the
-            # universe, and everything!
-            "compute_accuracy": 10,  # It knows the ultimate answer to life, the
-            # universe, and everything! Humor is obviously undefined for deepthought.
-        }
-    },
-    {
-        "fictional_hw": {
-            "architecture": "tars",
-            "compute_capability": 8,  # Handles complex space missions and emotional AI
-            # interactions.
-            "compute_accuracy": 8,  # Can get you through a black hole, but don't push
-            # the humor settings too high!
-            "humor": 10,  # Adjustable humor settings from deadpan to hilarious
-        }
-    },
-    {
-        "fictional_hw": {
-            "architecture": "HAL9000",
-            "compute_capability": 6,  # Extremely reliable until it starts to question
-            # human commands ...
-            # `compute_accuracy` is obviously undefined for HAL9000 since it questions
-            # Human commands.
-            "humor": 2,  # A bit of a cold operator, though it tries to be polite.
-        }
-    },
-    {
-        "fictional_hw": {
-            "architecture": "mother",
-            "compute_capability": 4,  # Efficient at monitoring and mission control -
-            # not ground shaking
-            # `compute_accuracy` is obviously undefined for mother -- the concept does
-            # not make sense
-            # `humor` is obviously undefined for mother (No jokes, just facts.) -- the
-            # concept does not make sense
-        }
-    },
-    # {
-    #     "fictional_tech": {
-    #         "technology": "*",
-    #         "risk_min_tolerance": ">0, <=10,000",
-    #         "quantum_capability": in [
-    #           NEWTONIAN, SIMPLE_SUPERPOSITION, QUANTUM_SUPERFLUID , QUANTUM_FOAM
-    #         ],
-    #         "power_requirements_in_solar_output": ">0.0, <1.0"
-    #     }
-    # },
-    {
-        "fictional_tech": {
-            "technology": "Auto Chef and Food Replicator",  # The Fifth Element
-            "risk_min_tolerance": 50,  # Unless it malfunctions, you'll be eating well.
-            "quantum_capability": "SIMPLE_SUPERPOSITION",  # It uses basic quantum
-            # principles to combine ingredients and create meals, but the tech
-            # doesn't push the boundaries of quantum mechanics.
-            "power_requirements_in_solar_output": 0.00001,  # Fairly simple process
-        }
-    },
-    {
-        "fictional_tech": {
-            "technology": " Infinite Improbability Drive",  # Hitchhiker's Guide
-            "risk_min_tolerance": 10000,  # Turning people into sofas or releasing
-            # sentient whales mid-flight is always a possibility.
-            "quantum_capability": "QUANTUM_FOAM",  # The drive taps into the quantum
-            # fluctuations of the universe, creating random, unpredictable effects by
-            # distorting reality. It's beyond comprehension and controlled chaos on a
-            # cosmic scale.
-            "power_requirements_in_solar_output": 0.6,  # The drive requires extreme
-            # energy to distort probabilities and alter the fabric of reality, much
-            # like creating temporary wormholes or impossibly improbable events.
-        }
-    },
+    # ~~~~~~~~~~~~~~~~~~~~~ VARIANTS FOR `fictional_hw` ONLY ~~~~~~~~~~~~~~~~~~~~~ #
+    [
+        VariantMeta(provider="fictional_hw", key="architecture", value="tars"),
+        # Handles complex space missions and emotional AI interactions.
+        VariantMeta(provider="fictional_hw", key="compute_capability", value="8"),
+        # Can get you through a black hole
+        VariantMeta(provider="fictional_hw", key="compute_accuracy", value="8"),
+        # Adjustable humor settings from deadpan to hilarious
+        VariantMeta(provider="fictional_hw", key="humor", value="10"),
+    ],
+    [
+        VariantMeta(provider="fictional_hw", key="architecture", value="HAL9000"),
+        # Extremely reliable until it starts to question human commands ...
+        VariantMeta(provider="fictional_hw", key="compute_capability", value="6"),
+        # obviously very low for HAL9000 since it questions Human commands.
+        VariantMeta(provider="fictional_hw", key="compute_accuracy", value="0"),
+        # A bit of a cold operator, though it tries to be polite.
+        VariantMeta(provider="fictional_hw", key="humor", value="2"),
+    ],
+    [
+        VariantMeta(provider="fictional_hw", key="architecture", value="mother"),
+        # Extremely reliable until it starts to question human commands ...
+        VariantMeta(provider="fictional_hw", key="compute_capability", value="4"),
+        # `compute_accuracy` is undefined for mother -- the concept does not make sense
+        # `humor` is undefined for mother (No jokes, just facts.)
+    ],
+    # ~~~~~~~~~~~~~~~~~~~~~ VARIANTS FOR `fictional_tech` ONLY ~~~~~~~~~~~~~~~~~~~~~ #
+    [
+        # The Fifth Element
+        VariantMeta(provider="fictional_tech", key="technology", value="auto_chef"),
+        # Unless it malfunctions, you'll be eating well.
+        VariantMeta(provider="fictional_tech", key="risk_exposure", value="25"),
+        # It uses basic quantum principles to combine ingredients and create meals,
+        # but the tech doesn't push the boundaries of quantum mechanics.
+        VariantMeta(provider="fictional_tech", key="quantum", value="SUPERPOSITION"),
+    ],
+    [
+        # Hitchhiker's Guide to the Galaxy
+        VariantMeta(provider="fictional_tech", key="technology", value="improb_drive"),
+        # Turning people into sofas or releasing sentient whales mid-flight is always
+        # a possibility.
+        VariantMeta(provider="fictional_tech", key="risk_exposure", value="1000000000"),
+        # The drive taps into the quantum fluctuations of the universe, creating random,
+        # unpredictable effects by distorting reality. It's beyond comprehension and
+        # controlled chaos on a cosmic scale..
+        VariantMeta(provider="fictional_tech", key="quantum", value="FOAM"),
+    ],
+    # ~~~~~~~~~~~~~~~~~~~~~ VARIANTS MIXING BOTH ~~~~~~~~~~~~~~~~~~~~~ #
+    [
+        VariantMeta(provider="fictional_hw", key="architecture", value="deepthought"),
+        # It knows the ultimate answer to life, the universe, and everything!
+        VariantMeta(provider="fictional_hw", key="compute_capability", value="10"),
+        # It knows the ultimate answer to life, the universe, and everything!
+        VariantMeta(provider="fictional_hw", key="compute_accuracy", value="10"),
+        # Humor is obviously undefined for deepthought.
+        VariantMeta(provider="fictional_hw", key="humor", value="0"),
+        # DeepThought is without a doubt a quantum computer of the finest level
+        VariantMeta(provider="fictional_tech", key="quantum", value="FOAM"),
+    ],
 ]
 
 
@@ -206,7 +185,7 @@ def generate_variants(source_folder: str | Path, dest_folder: str | Path):
     if not base_whl_f.exists():
         raise FileNotFoundError(base_whl_f)
 
-    for variant_nfo in VARIANTS_2_GENERATE:
+    for variant_metas in VARIANTS_2_GENERATE:
         with tempfile.TemporaryDirectory() as tmpdir:
             tmpdir = Path(tmpdir)  # noqa: PLW2901
             source_whl = tmpdir / base_whl_f.name
@@ -237,10 +216,7 @@ def generate_variants(source_folder: str | Path, dest_folder: str | Path):
             if not metadata_f.exists():
                 raise FileNotFoundError(metadata_f)
 
-            # keep only the first part of the hash. Like git hash, uniqueness is all
-            # that matters, and 8 characters is plenty when considering that a given
-            # package will have relative few variants.
-            variant_hash = dict_hash.shake_128(variant_nfo)
+            variant_desc = VariantDescription(variant_metas)
 
             with metadata_f.open(mode="r+") as file:
                 # Read all lines
@@ -259,14 +235,16 @@ def generate_variants(source_folder: str | Path, dest_folder: str | Path):
                 # Truncate the file to remove any remaining old content
                 file.truncate()
 
-                file.write(f"Variant-hash: {variant_hash}\n")
-                for variant_provider, variant_data in variant_nfo.items():
-                    for key, val in variant_data.items():
-                        # Variant: fictional_hw :: <key> :: <val>
-                        file.write(f"Variant: {variant_provider} :: {key} :: {val}\n")
+                file.write(f"Variant-hash: {variant_desc.hexdigest}\n")
+
+                for variant_meta in variant_desc:
+                    # Variant: <provider> :: <key> :: <val>
+                    file.write(f"Variant: {variant_meta.data}\n")
 
             dest_whl_path = wheel_pack(
-                directory=wheel_dir, dest_dir=tmpdir, variant_hash=variant_hash
+                directory=wheel_dir,
+                dest_dir=tmpdir,
+                variant_hash=variant_desc.hexdigest,
             )
 
             if not Path(dest_whl_path).exists():
