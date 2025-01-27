@@ -15,7 +15,7 @@ simpleA_bp = Blueprint("simpleA", __name__)  # noqa: N816
 
 @simpleA_bp.route("/")
 def home():
-    packages = [f.name for f in os.scandir(ARTIFACTS_FOLDER) if f.is_dir()]
+    packages = sorted([f.name for f in os.scandir(ARTIFACTS_FOLDER) if f.is_dir()])
     return render_template("simple.html", packages=packages)
 
 
@@ -33,4 +33,8 @@ def detail_packages(name: str):
         }
         for whl_f in whl_files
     ]
-    return render_template("simple_detail.html", name=name, wheel_files=data)
+    return render_template(
+        "simple_detail.html",
+        name=name,
+        wheel_files=sorted(data, key=lambda pkg: pkg["name"], reverse=True),
+    )
