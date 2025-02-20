@@ -152,7 +152,7 @@ def wheel_pack(
         # if the hash is not a valid hash value, drop the value and ignore
         variant_hash = variant_hash[:VARIANT_HASH_LEN]
         if re.match(variant_hash_pattern, variant_hash):
-            name_version += f"-@{variant_hash}"
+            name_version += f"~{variant_hash}"
 
     # Reassemble the tags for the wheel file
     tagline = whl_pck.compute_tagline(tags)
@@ -238,7 +238,7 @@ def generate_variants(source_folder: str | Path, dest_folder: str | Path):
 
                 for variant_meta in variant_desc:
                     # Variant: <provider> :: <key> :: <val>
-                    file.write(f"Variant: {variant_meta.data}\n")
+                    file.write(f"Variant: {variant_meta.to_str()}\n")
 
             dest_whl_path = wheel_pack(
                 directory=wheel_dir,

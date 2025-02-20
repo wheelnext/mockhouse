@@ -50,11 +50,11 @@ def variant_detail(name, variant):
     # todo: make this a proper lookup, not a string match
     files = [
         {
-            "url": f"/static/artifacts/dummy_project-0.0.1-@{variant[:VARIANT_HASH_LEN]}-py3-none-any.whl",
+            "url": f"/static/artifacts/dummy_project-0.0.1~{variant[:VARIANT_HASH_LEN]}-py3-none-any.whl",
             "hashes": {
                 "sha256": "e4d430bf9cee170db16d6fab21c1fb493005199e3e85be85b6ed4cb1d8feb742"
             },
-            "filename": f"dummy_project-0.0.1-@{variant[:VARIANT_HASH_LEN]}-py3-none-any.whl",
+            "filename": f"dummy_project-0.0.1~{variant[:VARIANT_HASH_LEN]}-py3-none-any.whl",
             "requires-python": "",
             "core-metadata": {
                 "sha256": "e4d430bf9cee170db16d6fab21c1fb493005199e3e85be85b6ed4cb1d8feb742"
