@@ -1,5 +1,6 @@
 import hashlib
 import os
+from itertools import chain
 from pathlib import Path
 
 from flask import Blueprint
@@ -22,7 +23,7 @@ def home():
 @simpleA_bp.route("/<name>/")
 def detail_packages(name: str):
     whl_dir = ARTIFACTS_FOLDER / name
-    whl_files = whl_dir.glob("*.whl")
+    whl_files = chain(whl_dir.glob("*.whl"), whl_dir.glob("variants.json"))
 
     data = [
         {
