@@ -1,24 +1,35 @@
 {
+    "providers": {
+        "fictional_hw": [
+            "provider_fictional_hw"
+        ],
+        "fictional_tech": [
+            "provider_fictional_tech"
+        ]
+    },
     "variants": {
-        "36266d4d": {
+        "03e04d5e": {
             "fictional_hw": {
-                "architecture": "HAL9000",
-                "compute_accuracy": "0",
-                "compute_capability": "6",
-                "humor": "2"
+                "architecture": "mother",
+                "compute_capability": "4"
             }
         },
-        "57768a46": {
+        "398dc925": {
+            "fictional_hw": {
+                "architecture": "HAL9000"
+            },
             "fictional_tech": {
                 "quantum": "FOAM",
                 "risk_exposure": "1000000000",
                 "technology": "improb_drive"
             }
         },
-        "e684be6f": {
+        "9cc137a9": {
             "fictional_hw": {
-                "architecture": "mother",
-                "compute_capability": "4"
+                "architecture": "HAL9000",
+                "compute_accuracy": "0",
+                "compute_capability": "6",
+                "humor": "2"
             }
         }
     }

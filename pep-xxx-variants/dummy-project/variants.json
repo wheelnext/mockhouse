@@ -1,29 +1,27 @@
 {
+    "providers": {
+        "fictional_hw": [
+            "provider_fictional_hw"
+        ],
+        "fictional_tech": [
+            "provider_fictional_tech"
+        ]
+    },
     "variants": {
-        "36266d4d": {
+        "03e04d5e": {
             "fictional_hw": {
-                "architecture": "HAL9000",
-                "compute_accuracy": "0",
-                "compute_capability": "6",
-                "humor": "2"
+                "architecture": "mother",
+                "compute_capability": "4"
             }
         },
-        "4f8ae729": {
-            "fictional_hw": {
-                "architecture": "tars",
-                "compute_accuracy": "8",
-                "compute_capability": "8",
-                "humor": "10"
-            }
-        },
-        "57768a46": {
+        "2c4ac281": {
             "fictional_tech": {
-                "quantum": "FOAM",
-                "risk_exposure": "1000000000",
-                "technology": "improb_drive"
+                "quantum": "SUPERPOSITION",
+                "risk_exposure": "25",
+                "technology": "auto_chef"
             }
         },
-        "6b4c8391": {
+        "4513a073": {
             "fictional_hw": {
                 "architecture": "deepthought",
                 "compute_accuracy": "10",
@@ -34,17 +32,27 @@
                 "quantum": "FOAM"
             }
         },
-        "9091cdc4": {
-            "fictional_tech": {
-                "quantum": "SUPERPOSITION",
-                "risk_exposure": "25",
-                "technology": "auto_chef"
+        "80fa16ff": {
+            "fictional_hw": {
+                "architecture": "tars",
+                "compute_accuracy": "8",
+                "compute_capability": "8",
+                "humor": "10"
             }
         },
-        "e684be6f": {
+        "9cc137a9": {
             "fictional_hw": {
-                "architecture": "mother",
-                "compute_capability": "4"
+                "architecture": "HAL9000",
+                "compute_accuracy": "0",
+                "compute_capability": "6",
+                "humor": "2"
+            }
+        },
+        "df159646": {
+            "fictional_tech": {
+                "quantum": "FOAM",
+                "risk_exposure": "1000000000",
+                "technology": "improb_drive"
             }
         }
     }
