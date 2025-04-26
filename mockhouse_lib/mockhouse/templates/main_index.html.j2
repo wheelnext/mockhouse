@@ -114,13 +114,9 @@
         <h1>Simple Index</h1>
 
         <ul>
-            
-            <li><a href="dummy-project/">dummy-project</a></li>
-            
-            <li><a href="pep-xxx-wheel-variants/">pep-xxx-wheel-variants</a></li>
-            
-            <li><a href="sandbox-project/">sandbox-project</a></li>
-            
+            {% for directory in directories %}
+            <li><a href="{{ directory }}/">{{ directory }}</a></li>
+            {% endfor %}
         </ul>
 
     </div>
