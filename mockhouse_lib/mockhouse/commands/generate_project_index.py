@@ -73,9 +73,7 @@ def generate_index(args: list[str]) -> None:
     output = template.render(
         project_name=project_name,
         # Non Variants first - Then by filename
-        wheels=sorted(
-            wheels, key=lambda x: (len(x["variant_data"]) > 0, x["filename"])
-        ),
+        wheels=sorted(wheels, key=lambda x: x["filename"]),
         variants_json_found=(directory / "variants.json").exists(),
     )
 
