@@ -12,15 +12,14 @@ from jinja2 import FileSystemLoader
 def analyze_wheel(wheel_path) -> str | None:
     try:
         result = subprocess.run(  # noqa: S603
-            shlex.split(f"variantlib analyze_wheel -i {wheel_path}"),
+            shlex.split(f"variantlib analyze-wheel -i {wheel_path}"),
             capture_output=True,
             text=True,
             check=True,
         )
         return result.stdout  # noqa: TRY300
     except subprocess.CalledProcessError as e:
-        print(f"An error occurred: {e}")  # noqa: T201
-        return None
+        raise RuntimeError from e
 
 
 def generate_index(args: list[str]) -> None:
