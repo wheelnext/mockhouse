@@ -1,11 +1,25 @@
 {
-    "providers": {
-        "fictional_hw": [
-            "provider_fictional_hw"
+    "default-priorities": {
+        "feature": [],
+        "namespace": [
+            "fictional_hw",
+            "fictional_tech"
         ],
-        "fictional_tech": [
-            "provider_fictional_tech"
-        ]
+        "property": []
+    },
+    "providers": {
+        "fictional_hw": {
+            "entry-point": "provider_fictional_hw.plugin:FictionalHWPlugin",
+            "requires": [
+                "provider-fictional-hw == 1.0.0"
+            ]
+        },
+        "fictional_tech": {
+            "entry-point": "provider_fictional_tech.plugin:FictionalTechPlugin",
+            "requires": [
+                "provider-fictional-tech == 1.0.0"
+            ]
+        }
     },
     "variants": {
         "00000000": {},

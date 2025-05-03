@@ -114,11 +114,11 @@
         <h1>{{ project_name }}</h1>
 
         <ul>
-            {% if variants_json_found %}
+            {% for json_f in variants_json_files %}
             <li>
-                <a href="variants.json">variants.json</a><br><br>
+                <a href="{{ json_f }}">{{ json_f }}</a><br><br>
             </li>
-            {% endif %}
+            {% endfor %}
             {% for wheel in wheels %}
             <li>
                 <a href="{{ wheel.filename }}">
