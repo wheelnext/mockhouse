@@ -9,13 +9,13 @@
     },
     "providers": {
         "fictional_hw": {
-            "entry-point": "provider_fictional_hw.plugin:FictionalHWPlugin",
+            "plugin-api": "provider_fictional_hw.plugin:FictionalHWPlugin",
             "requires": [
                 "provider-fictional-hw == 1.0.0"
             ]
         },
         "fictional_tech": {
-            "entry-point": "provider_fictional_tech.plugin:FictionalTechPlugin",
+            "plugin-api": "provider_fictional_tech.plugin:FictionalTechPlugin",
             "requires": [
                 "provider-fictional-tech == 1.0.0"
             ]
