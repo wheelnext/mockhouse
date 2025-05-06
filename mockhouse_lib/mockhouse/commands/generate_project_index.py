@@ -73,7 +73,7 @@ def generate_index(args: list[str]) -> None:
         project_name=project_name,
         # Non Variants first - Then by filename
         wheels=sorted(wheels, key=lambda x: x["filename"]),
-        variants_json_files=[fp.name for fp in directory.glob("variants-*.json")],
+        variants_json_files=[fp.name for fp in directory.glob("*-variants.json")],
     )
 
     with pathlib.Path("index.html").open(mode="w") as f:

@@ -29,19 +29,19 @@
                 "compute_capability": "4"
             }
         },
-        "398dc925": {
+        "38ea48ce": {
             "fictional_hw": {
-                "architecture": "HAL9000"
+                "architecture": "hal9000"
             },
             "fictional_tech": {
-                "quantum": "FOAM",
+                "quantum": "foam",
                 "risk_exposure": "1000000000",
                 "technology": "improb_drive"
             }
         },
-        "9cc137a9": {
+        "3f7188c1": {
             "fictional_hw": {
-                "architecture": "HAL9000",
+                "architecture": "hal9000",
                 "compute_accuracy": "0",
                 "compute_capability": "6",
                 "humor": "2"

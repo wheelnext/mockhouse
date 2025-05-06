@@ -29,14 +29,7 @@
                 "compute_capability": "4"
             }
         },
-        "2c4ac281": {
-            "fictional_tech": {
-                "quantum": "SUPERPOSITION",
-                "risk_exposure": "25",
-                "technology": "auto_chef"
-            }
-        },
-        "4513a073": {
+        "36028aca": {
             "fictional_hw": {
                 "architecture": "deepthought",
                 "compute_accuracy": "10",
@@ -44,7 +37,29 @@
                 "humor": "0"
             },
             "fictional_tech": {
-                "quantum": "FOAM"
+                "quantum": "foam"
+            }
+        },
+        "3f7188c1": {
+            "fictional_hw": {
+                "architecture": "hal9000",
+                "compute_accuracy": "0",
+                "compute_capability": "6",
+                "humor": "2"
+            }
+        },
+        "7db6d39f": {
+            "fictional_tech": {
+                "quantum": "superposition",
+                "risk_exposure": "25",
+                "technology": "auto_chef"
+            }
+        },
+        "808c7f9d": {
+            "fictional_tech": {
+                "quantum": "foam",
+                "risk_exposure": "1000000000",
+                "technology": "improb_drive"
             }
         },
         "80fa16ff": {
@@ -53,21 +68,6 @@
                 "compute_accuracy": "8",
                 "compute_capability": "8",
                 "humor": "10"
-            }
-        },
-        "9cc137a9": {
-            "fictional_hw": {
-                "architecture": "HAL9000",
-                "compute_accuracy": "0",
-                "compute_capability": "6",
-                "humor": "2"
-            }
-        },
-        "df159646": {
-            "fictional_tech": {
-                "quantum": "FOAM",
-                "risk_exposure": "1000000000",
-                "technology": "improb_drive"
             }
         }
     }
