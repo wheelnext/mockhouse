@@ -1,0 +1,51 @@
+{
+    "default-priorities": {
+        "feature": [],
+        "namespace": [
+            "fictional_tech",
+            "fictional_hw"
+        ],
+        "property": []
+    },
+    "providers": {
+        "fictional_hw": {
+            "plugin-api": "provider_fictional_hw.plugin:FictionalHWPlugin",
+            "requires": [
+                "provider-fictional-hw == 1.0.0"
+            ]
+        },
+        "fictional_tech": {
+            "plugin-api": "provider_fictional_tech.plugin:FictionalTechPlugin",
+            "requires": [
+                "provider-fictional-tech == 1.0.0"
+            ]
+        }
+    },
+    "variants": {
+        "00000000": {},
+        "03e04d5e": {
+            "fictional_hw": {
+                "architecture": "mother",
+                "compute_capability": "4"
+            }
+        },
+        "38ea48ce": {
+            "fictional_hw": {
+                "architecture": "hal9000"
+            },
+            "fictional_tech": {
+                "quantum": "foam",
+                "risk_exposure": "1000000000",
+                "technology": "improb_drive"
+            }
+        },
+        "3f7188c1": {
+            "fictional_hw": {
+                "architecture": "hal9000",
+                "compute_accuracy": "0",
+                "compute_capability": "6",
+                "humor": "2"
+            }
+        }
+    }
+}
