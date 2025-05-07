@@ -60,6 +60,19 @@ def generate_index(args: list[str]) -> None:
             }
         )
 
+    sdists = []
+    for sdist_f in directory.glob("*.tar.gz"):
+        sdist_path = pathlib.Path(sdist_f)
+        print(f"Processing sdist: {sdist_path}")
+        if not sdist_path.is_file():
+            raise FileNotFoundError(f"File not found: `{sdist_path}`")
+        sdists.append(
+            {
+                "filename": sdist_path.name,
+                "variant_data": [],
+            }
+        )
+
     # Load template
     current_dir = pathlib.Path(__file__).parent.parent
     env = Environment(
@@ -72,8 +85,10 @@ def generate_index(args: list[str]) -> None:
     output = template.render(
         project_name=project_name,
         # Non Variants first - Then by filename
-        wheels=sorted(wheels, key=lambda x: x["filename"]),
-        variants_json_files=[fp.name for fp in directory.glob("*-variants.json")],
+        packages=sorted(wheels + sdists, key=lambda x: x["filename"]),
+        variants_json_files=sorted(
+            [fp.name for fp in directory.glob("*-variants.json")]
+        ),
     )
 
     with pathlib.Path("index.html").open(mode="w") as f:

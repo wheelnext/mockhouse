@@ -119,15 +119,15 @@
                 <a href="{{ json_f }}">{{ json_f }}</a><br><br>
             </li>
             {% endfor %}
-            {% for wheel in wheels %}
+            {% for package in packages %}
             <li>
-                <a href="{{ wheel.filename }}">
-                    {{ wheel.filename }}
+                <a href="{{ package.filename }}">
+                    {{ package.filename }}
                 </a>
 
-                {% if wheel.variant_data %}
+                {% if package.variant_data %}
                 <div class="code-block">
-                    {% for vline in wheel.variant_data %}
+                    {% for vline in package.variant_data %}
                     {{ vline }}<br>
                     {% endfor %}
                 </div>
