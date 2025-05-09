@@ -17,4 +17,4 @@ clean-all: clean
 
 build:
 	variantlib generate-index-json -d .
-	mockhouse generate_project_index -d .
+	mockhouse generate-project-index -d .

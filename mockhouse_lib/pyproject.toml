@@ -45,8 +45,8 @@ test = []
 mockhouse = "mockhouse.commands.main:main"
 
 [project.entry-points."mockhouse.actions"]
-generate_main_index = "mockhouse.commands.generate_main_index:generate_index"
-generate_project_index = "mockhouse.commands.generate_project_index:generate_index"
+generate-main-index = "mockhouse.commands.generate_main_index:generate_index"
+generate-project-index = "mockhouse.commands.generate_project_index:generate_index"
 
 [tool.pytest.ini_options]
 testpaths = ["tests/"]
