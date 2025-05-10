@@ -12,7 +12,7 @@ from jinja2 import FileSystemLoader
 def analyze_wheel(wheel_path) -> str | None:
     try:
         result = subprocess.run(  # noqa: S603
-            shlex.split(f"variantlib analyze-wheel -i {wheel_path}"),
+            shlex.split(f"variantlib analyze-wheel -i '{wheel_path}'"),
             capture_output=True,
             text=True,
             check=True,
