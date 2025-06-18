@@ -1,14 +1,30 @@
 {
+    "$schema": "https://variants-schema.wheelnext.dev/",
     "default-priorities": {
-        "feature": [],
+        "feature": {
+            "fictional_hw": [
+                "humor",
+                "compute_accuracy"
+            ],
+            "fictional_tech": [
+                "quantum"
+            ]
+        },
         "namespace": [
-            "fictional_tech",
-            "fictional_hw"
+            "fictional_hw",
+            "fictional_tech"
         ],
-        "property": []
+        "property": {
+            "fictional_tech": {
+                "technology": [
+                    "auto_chef"
+                ]
+            }
+        }
     },
     "providers": {
         "fictional_hw": {
+            "enable-if": "python_version >= '3.12'",
             "plugin-api": "provider_fictional_hw.plugin:FictionalHWPlugin",
             "requires": [
                 "provider-fictional-hw == 1.0.0"
@@ -25,26 +41,46 @@
         "00000000": {},
         "03e04d5e": {
             "fictional_hw": {
-                "architecture": "mother",
-                "compute_capability": "4"
+                "architecture": [
+                    "mother"
+                ],
+                "compute_capability": [
+                    "4"
+                ]
             }
         },
         "38ea48ce": {
             "fictional_hw": {
-                "architecture": "hal9000"
+                "architecture": [
+                    "hal9000"
+                ]
             },
             "fictional_tech": {
-                "quantum": "foam",
-                "risk_exposure": "1000000000",
-                "technology": "improb_drive"
+                "quantum": [
+                    "foam"
+                ],
+                "risk_exposure": [
+                    "1000000000"
+                ],
+                "technology": [
+                    "improb_drive"
+                ]
             }
         },
         "3f7188c1": {
             "fictional_hw": {
-                "architecture": "hal9000",
-                "compute_accuracy": "0",
-                "compute_capability": "6",
-                "humor": "2"
+                "architecture": [
+                    "hal9000"
+                ],
+                "compute_accuracy": [
+                    "0"
+                ],
+                "compute_capability": [
+                    "6"
+                ],
+                "humor": [
+                    "2"
+                ]
             }
         }
     }

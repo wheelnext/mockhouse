@@ -7,14 +7,16 @@
 clean:  ## remove all json/html
 	rm -fr *.json
 	rm -fr *.html
-
-clean-all: clean
 	rm -fr *.whl
 
 # ============================================================================ #
 # BUILD COMMANDS
 # ============================================================================ #
 
-build:
+build:  clean
+	cd ../../../dummy-projects-flit/sandbox-project/ && \
+		make build && \
+		cp dist/*.whl ../../mockhouse/pep-xxx-variants/sandbox-project/ && \
+		cd -
 	variantlib generate-index-json -d .
 	mockhouse generate-project-index -d .
