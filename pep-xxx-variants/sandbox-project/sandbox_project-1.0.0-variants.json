@@ -11,8 +11,8 @@
             ]
         },
         "namespace": [
-            "fictional_hw",
-            "fictional_tech"
+            "fictional_tech",
+            "fictional_hw"
         ],
         "property": {
             "fictional_tech": {
@@ -39,17 +39,69 @@
     },
     "variants": {
         "00000000": {},
-        "03e04d5e": {
+        "273f6a88": {
             "fictional_hw": {
                 "architecture": [
-                    "mother"
+                    "hal9000"
                 ],
                 "compute_capability": [
-                    "4"
+                    ">=8"
                 ]
             }
         },
-        "38ea48ce": {
+        "8fc5c488": {
+            "fictional_hw": {
+                "compute_capability": [
+                    ">=8"
+                ]
+            },
+            "fictional_tech": {
+                "quantum": [
+                    "foam"
+                ],
+                "risk_exposure": [
+                    "25"
+                ],
+                "technology": [
+                    "auto_chef"
+                ]
+            }
+        },
+        "c9fae9c5": {
+            "fictional_tech": {
+                "quantum": [
+                    "foam"
+                ],
+                "risk_exposure": [
+                    "25"
+                ],
+                "technology": [
+                    "auto_chef"
+                ]
+            }
+        },
+        "d60207cd": {
+            "fictional_hw": {
+                "architecture": [
+                    "hal9000"
+                ],
+                "compute_capability": [
+                    ">=8"
+                ]
+            },
+            "fictional_tech": {
+                "quantum": [
+                    "foam"
+                ],
+                "risk_exposure": [
+                    "25"
+                ],
+                "technology": [
+                    "auto_chef"
+                ]
+            }
+        },
+        "fc509333": {
             "fictional_hw": {
                 "architecture": [
                     "hal9000"
@@ -60,26 +112,10 @@
                     "foam"
                 ],
                 "risk_exposure": [
-                    "1000000000"
+                    "25"
                 ],
                 "technology": [
-                    "improb_drive"
-                ]
-            }
-        },
-        "3f7188c1": {
-            "fictional_hw": {
-                "architecture": [
-                    "hal9000"
-                ],
-                "compute_accuracy": [
-                    "0"
-                ],
-                "compute_capability": [
-                    "6"
-                ],
-                "humor": [
-                    "2"
+                    "auto_chef"
                 ]
             }
         }
