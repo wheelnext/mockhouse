@@ -91,9 +91,5 @@ def generate_index(args: list[str]) -> None:
         ),
     )
 
-    with pathlib.Path("index.html").open(mode="w") as f:
+    with (directory / "index.html").open(mode="w") as f:
         f.write(output)
-
-
-if __name__ == "__main__":
-    generate_index()

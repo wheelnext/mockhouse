@@ -1,25 +1,12 @@
 [build-system]
-requires = ["setuptools >= 61.0"]
-build-backend = "setuptools.build_meta"
-
-[tool.distutils.bdist_wheel]
-universal = true
-
-[tool.setuptools]
-include-package-data = true
-
-[tool.setuptools.packages.find]
-include = ["mockhouse*"]
-exclude = ["tests*", "*.tests", "*.tests.*"]
-namespaces = true
+requires = ["flit_core >=3.11,<4"]
+build-backend = "flit_core.buildapi"
 
 [project]
 name = "mockhouse"
 version = "0.0.1.dev1"
 description = "A library to generate variant index files"
-readme = "README.md"
 requires-python = ">=3.9"
-license = { file = "LICENSE" }
 authors = [
     { name = "Jonathan Dekhtiar", email = "jonathan@dekhtiar.com" }
 ]
