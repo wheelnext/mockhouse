@@ -14,9 +14,9 @@ clean:  ## remove all json/html
 # ============================================================================ #
 
 BASE_PACKAGE_DIRS := \
-	pep_xxx_wheel_variants:pep-xxx-wheel-variants \
-	"provider_example_dynamic(HW):provider-fictional-hw" \
-	"provider_example_static(Tech):provider-fictional-tech"
+	"pep_xxx_wheel_variants:pep-xxx-wheel-variants" \
+	"provider_example_hw:provider-fictional-hw" \
+	"provider_example_tech:provider-fictional-tech"
 
 build_base_packages:
 	@for pair in $(BASE_PACKAGE_DIRS); do \

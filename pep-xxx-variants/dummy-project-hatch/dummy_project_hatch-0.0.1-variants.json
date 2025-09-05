@@ -21,17 +21,6 @@
         }
     },
     "variants": {
-        "00000000": {},
-        "03e04d5e": {
-            "fictional_hw": {
-                "architecture": [
-                    "mother"
-                ],
-                "compute_capability": [
-                    "4"
-                ]
-            }
-        },
         "36028aca": {
             "fictional_hw": {
                 "architecture": [
@@ -53,49 +42,25 @@
                 ]
             }
         },
-        "3f7188c1": {
+        "a": {
             "fictional_hw": {
                 "architecture": [
-                    "hal9000"
-                ],
-                "compute_accuracy": [
-                    "0"
+                    "mother"
                 ],
                 "compute_capability": [
-                    "6"
-                ],
-                "humor": [
-                    "2"
+                    "4"
                 ]
             }
         },
-        "7db6d39f": {
-            "fictional_tech": {
-                "quantum": [
-                    "superposition"
-                ],
-                "risk_exposure": [
-                    "25"
-                ],
-                "technology": [
-                    "auto_chef"
+        "a0112654": {
+            "fictional_hw": {
+                "architecture": [
+                    "mother"
                 ]
             }
         },
-        "808c7f9d": {
-            "fictional_tech": {
-                "quantum": [
-                    "foam"
-                ],
-                "risk_exposure": [
-                    "1000000000"
-                ],
-                "technology": [
-                    "improb_drive"
-                ]
-            }
-        },
-        "80fa16ff": {
+        "null": {},
+        "super_variant_xx": {
             "fictional_hw": {
                 "architecture": [
                     "tars"
@@ -111,10 +76,45 @@
                 ]
             }
         },
-        "foobar": {
+        "super_variant_yy": {
+            "fictional_tech": {
+                "quantum": [
+                    "superposition"
+                ],
+                "risk_exposure": [
+                    "25"
+                ],
+                "technology": [
+                    "auto_chef"
+                ]
+            }
+        },
+        "variant.foobar": {
             "fictional_hw": {
                 "architecture": [
-                    "mother"
+                    "hal9000"
+                ],
+                "compute_accuracy": [
+                    "0"
+                ],
+                "compute_capability": [
+                    "6"
+                ],
+                "humor": [
+                    "2"
+                ]
+            }
+        },
+        "variant_foobar": {
+            "fictional_tech": {
+                "quantum": [
+                    "foam"
+                ],
+                "risk_exposure": [
+                    "1000000000"
+                ],
+                "technology": [
+                    "improb_drive"
                 ]
             }
         }

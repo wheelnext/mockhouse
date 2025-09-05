@@ -21,17 +21,65 @@
         }
     },
     "variants": {
-        "03e04d5e": {
-            "fictional_hw": {
-                "architecture": [
-                    "mother"
+        "0123456789abcdef": {
+            "fictional_tech": {
+                "quantum": [
+                    "foam"
                 ],
-                "compute_capability": [
-                    "4"
+                "risk_exposure": [
+                    "1000000000"
+                ],
+                "technology": [
+                    "improb_drive"
                 ]
             }
         },
-        "36028aca": {
+        "3f7188c1": {
+            "fictional_hw": {
+                "architecture": [
+                    "hal9000"
+                ],
+                "compute_accuracy": [
+                    "0"
+                ],
+                "compute_capability": [
+                    "6"
+                ],
+                "humor": [
+                    "2"
+                ]
+            }
+        },
+        "a": {
+            "fictional_hw": {
+                "architecture": [
+                    "tars"
+                ],
+                "compute_accuracy": [
+                    "8"
+                ],
+                "compute_capability": [
+                    "8"
+                ],
+                "humor": [
+                    "10"
+                ]
+            }
+        },
+        "auto_25_super": {
+            "fictional_tech": {
+                "quantum": [
+                    "superposition"
+                ],
+                "risk_exposure": [
+                    "25"
+                ],
+                "technology": [
+                    "auto_chef"
+                ]
+            }
+        },
+        "deepthought_foam": {
             "fictional_hw": {
                 "architecture": [
                     "deepthought"
@@ -52,63 +100,16 @@
                 ]
             }
         },
-        "3f7188c1": {
+        "hw_mother_4": {
             "fictional_hw": {
                 "architecture": [
-                    "hal9000"
-                ],
-                "compute_accuracy": [
-                    "0"
+                    "mother"
                 ],
                 "compute_capability": [
-                    "6"
-                ],
-                "humor": [
-                    "2"
+                    "4"
                 ]
             }
         },
-        "7db6d39f": {
-            "fictional_tech": {
-                "quantum": [
-                    "superposition"
-                ],
-                "risk_exposure": [
-                    "25"
-                ],
-                "technology": [
-                    "auto_chef"
-                ]
-            }
-        },
-        "808c7f9d": {
-            "fictional_tech": {
-                "quantum": [
-                    "foam"
-                ],
-                "risk_exposure": [
-                    "1000000000"
-                ],
-                "technology": [
-                    "improb_drive"
-                ]
-            }
-        },
-        "80fa16ff": {
-            "fictional_hw": {
-                "architecture": [
-                    "tars"
-                ],
-                "compute_accuracy": [
-                    "8"
-                ],
-                "compute_capability": [
-                    "8"
-                ],
-                "humor": [
-                    "10"
-                ]
-            }
-        }
+        "null": {}
     }
 }
