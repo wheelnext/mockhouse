@@ -1,5 +1,5 @@
 {
-    "$schema": "https://variants-schema.wheelnext.dev/v0.0.2.json",
+    "$schema": "https://variants-schema.wheelnext.dev/v0.0.3.json",
     "default-priorities": {
         "namespace": [
             "fictional_hw",
@@ -21,100 +21,20 @@
         }
     },
     "variants": {
-        "36028aca": {
-            "fictional_hw": {
-                "architecture": [
-                    "deepthought"
-                ],
-                "compute_accuracy": [
-                    "10"
-                ],
-                "compute_capability": [
-                    "10"
-                ],
-                "humor": [
-                    "0"
-                ]
-            },
-            "fictional_tech": {
-                "quantum": [
-                    "foam"
-                ]
-            }
-        },
-        "a": {
-            "fictional_hw": {
-                "architecture": [
-                    "mother"
-                ],
-                "compute_capability": [
-                    "4"
-                ]
-            }
-        },
-        "a0112654": {
+        "foobar": {
             "fictional_hw": {
                 "architecture": [
                     "mother"
                 ]
             }
         },
-        "null": {},
-        "super_variant_xx": {
+        "foobar2": {
             "fictional_hw": {
                 "architecture": [
-                    "tars"
+                    "mother"
                 ],
                 "compute_accuracy": [
-                    "8"
-                ],
-                "compute_capability": [
-                    "8"
-                ],
-                "humor": [
                     "10"
-                ]
-            }
-        },
-        "super_variant_yy": {
-            "fictional_tech": {
-                "quantum": [
-                    "superposition"
-                ],
-                "risk_exposure": [
-                    "25"
-                ],
-                "technology": [
-                    "auto_chef"
-                ]
-            }
-        },
-        "variant.foobar": {
-            "fictional_hw": {
-                "architecture": [
-                    "hal9000"
-                ],
-                "compute_accuracy": [
-                    "0"
-                ],
-                "compute_capability": [
-                    "6"
-                ],
-                "humor": [
-                    "2"
-                ]
-            }
-        },
-        "variant_foobar": {
-            "fictional_tech": {
-                "quantum": [
-                    "foam"
-                ],
-                "risk_exposure": [
-                    "1000000000"
-                ],
-                "technology": [
-                    "improb_drive"
                 ]
             }
         }

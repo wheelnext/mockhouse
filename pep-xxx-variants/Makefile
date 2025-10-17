@@ -14,9 +14,8 @@ clean:  ## remove all json/html
 # ============================================================================ #
 
 BASE_PACKAGE_DIRS := \
-	"pep_xxx_wheel_variants:pep-xxx-wheel-variants" \
-	"provider_example_hw:provider-fictional-hw" \
-	"provider_example_tech:provider-fictional-tech"
+	"plugins/provider_fictional_hw:provider-fictional-hw" \
+	"plugins/provider_fictional_tech:provider-fictional-tech"
 
 build_base_packages:
 	@for pair in $(BASE_PACKAGE_DIRS); do \
@@ -27,7 +26,7 @@ build_base_packages:
 		mkdir -p "$$OUTPUT_DIR"; \
 		cd ../../$$INPUT_DIR/ && \
 			make build > /dev/null 2>&1 && \
-			cp dist/*.whl ../mockhouse/pep-xxx-variants/$$OUTPUT_DIR/ && \
+			cp dist/*.whl ../../mockhouse/pep-xxx-variants/$$OUTPUT_DIR/ && \
 			cd - > /dev/null 2>&1; \
 		mockhouse generate-project-index -d "$$OUTPUT_DIR" > /dev/null 2>&1; \
 	done

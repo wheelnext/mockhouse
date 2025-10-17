@@ -1,5 +1,5 @@
 {
-    "$schema": "https://variants-schema.wheelnext.dev/v0.0.2.json",
+    "$schema": "https://variants-schema.wheelnext.dev/v0.0.3.json",
     "default-priorities": {
         "namespace": [
             "fictional_hw",
@@ -21,52 +21,7 @@
         }
     },
     "variants": {
-        "0123456789abcdef": {
-            "fictional_tech": {
-                "quantum": [
-                    "foam"
-                ],
-                "risk_exposure": [
-                    "1000000000"
-                ],
-                "technology": [
-                    "improb_drive"
-                ]
-            }
-        },
-        "3f7188c1": {
-            "fictional_hw": {
-                "architecture": [
-                    "hal9000"
-                ],
-                "compute_accuracy": [
-                    "0"
-                ],
-                "compute_capability": [
-                    "6"
-                ],
-                "humor": [
-                    "2"
-                ]
-            }
-        },
-        "a": {
-            "fictional_hw": {
-                "architecture": [
-                    "tars"
-                ],
-                "compute_accuracy": [
-                    "8"
-                ],
-                "compute_capability": [
-                    "8"
-                ],
-                "humor": [
-                    "10"
-                ]
-            }
-        },
-        "auto_25_super": {
+        "autochef_r25_sup": {
             "fictional_tech": {
                 "quantum": [
                     "superposition"
@@ -79,7 +34,7 @@
                 ]
             }
         },
-        "deepthought_foam": {
+        "dthought_c10_fm": {
             "fictional_hw": {
                 "architecture": [
                     "deepthought"
@@ -100,7 +55,36 @@
                 ]
             }
         },
-        "hw_mother_4": {
+        "foam_r_e10_impro": {
+            "fictional_tech": {
+                "quantum": [
+                    "foam"
+                ],
+                "risk_exposure": [
+                    "1000000000"
+                ],
+                "technology": [
+                    "improb_drive"
+                ]
+            }
+        },
+        "hal9k_c0_6_nfun": {
+            "fictional_hw": {
+                "architecture": [
+                    "hal9000"
+                ],
+                "compute_accuracy": [
+                    "0"
+                ],
+                "compute_capability": [
+                    "6"
+                ],
+                "humor": [
+                    "2"
+                ]
+            }
+        },
+        "mother_compute4": {
             "fictional_hw": {
                 "architecture": [
                     "mother"
@@ -110,6 +94,22 @@
                 ]
             }
         },
-        "null": {}
+        "null": {},
+        "tars_c8_funny": {
+            "fictional_hw": {
+                "architecture": [
+                    "tars"
+                ],
+                "compute_accuracy": [
+                    "8"
+                ],
+                "compute_capability": [
+                    "8"
+                ],
+                "humor": [
+                    "10"
+                ]
+            }
+        }
     }
 }

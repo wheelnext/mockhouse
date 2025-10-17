@@ -1,5 +1,5 @@
 {
-    "$schema": "https://variants-schema.wheelnext.dev/v0.0.2.json",
+    "$schema": "https://variants-schema.wheelnext.dev/v0.0.3.json",
     "default-priorities": {
         "namespace": [
             "fictional_tech",
@@ -21,7 +21,7 @@
         }
     },
     "variants": {
-        "3f7188c1": {
+        "hal9k_c0_6_nfun": {
             "fictional_hw": {
                 "architecture": [
                     "hal9000"
@@ -37,7 +37,7 @@
                 ]
             }
         },
-        "a": {
+        "hal9k_foam_r_e10": {
             "fictional_hw": {
                 "architecture": [
                     "hal9000"
@@ -55,7 +55,7 @@
                 ]
             }
         },
-        "abcdef0123456789": {
+        "mother_c4": {
             "fictional_hw": {
                 "architecture": [
                     "mother"
